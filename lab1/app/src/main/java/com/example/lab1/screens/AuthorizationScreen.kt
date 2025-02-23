@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
@@ -35,6 +36,7 @@ fun Auth_Prev() {
 
         Spacer(modifier = Modifier.height(300.dp))
 
+        // логин
         Box(
             modifier = Modifier.background(color = Color.Blue)
                 .fillMaxWidth()
@@ -51,6 +53,7 @@ fun Auth_Prev() {
         Spacer(modifier = Modifier.height(50.dp))
 
 
+        // пароль
         Box(
             modifier = Modifier.background(color = Color.Blue)
                 .fillMaxWidth()
@@ -68,17 +71,19 @@ fun Auth_Prev() {
         Spacer(modifier = Modifier.height(50.dp))
 
 
-        //кнопка входа
+        // войти
         Box(
-            modifier = Modifier
-                .background(color = Color.Green)
+            modifier = Modifier.background(color = Color.Blue)
                 .fillMaxWidth()
-        ) {
-            Column {  }
-            Row() {
-                Button(onClick = { /* TODO: обработка регистрации */ }) {
-                    Text("Войти")
-                }
+        )
+        {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Button(onClick = {} ) { Text(text = "Войти") }
+            }
+        }
 
 
                 Spacer(modifier = Modifier.height(50.dp))
@@ -109,6 +114,3 @@ fun Auth_Prev() {
 
             }
         }
-    }
-}
-

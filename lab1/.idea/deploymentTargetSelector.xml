@@ -8,16 +8,7 @@
       <SelectionState runConfigName="Auth_Prev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="MainActivity">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="About_me_Prev">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="SearchSettings_prev">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
-      <SelectionState runConfigName="MainScreen_prev">
+      <SelectionState runConfigName="Recovery_Password_prev">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

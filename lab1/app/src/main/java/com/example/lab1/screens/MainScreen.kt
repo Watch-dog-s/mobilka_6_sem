@@ -33,33 +33,57 @@ fun MainScreen(){
     Column (modifier = Modifier.fillMaxSize()) {
 
         Spacer(modifier = Modifier.height(40.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
 
-            Button(onClick = {})
-            { Text(text = "Поиск вкансий") };
+                Button(onClick = {})
+                { Text(text = "Поиск вкансий") };
 
-            Button(onClick = {})
-            { Text(text = "Обновить данные") }
+                Button(onClick = {})
+                { Text(text = "Обновить данные") }
 
-            Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(40.dp))
 
+
+
+            }
+            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                Text(text = "Name")
+            }
+            Spacer(modifier = Modifier.height(20.dp))
             ImageScreen()
 
+            Spacer(modifier = Modifier.height(40.dp))
+            Vacancy_Response()
 
         }
-
     }
 }
 
 
 @Composable
 fun ImageScreen(){
-    Image(
-        painter = painterResource(id = R.drawable.avatar), // Замените на ваш ресурс
-        contentDescription = "Описание изображения",
-        modifier = Modifier.size(100.dp)
-    )
+    Row (horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()){
+        Image(
+            painter = painterResource(id = R.drawable.avatar), // аватар юзера
+            contentDescription = "Тут аватар пользователя",
+            modifier = Modifier.size(100.dp)
+        )
+
+
+    }
+}
+
+
+@Composable
+fun Vacancy_Response(){
+    Column {
+        Text("Отклик по вакансии 1");
+        Text("Отклик по вакансии 2")
+
+    }
+
 }

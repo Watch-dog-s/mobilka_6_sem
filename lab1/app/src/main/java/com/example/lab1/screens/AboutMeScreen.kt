@@ -66,19 +66,19 @@ fun About_me() {
         ) {
 
             Spacer(modifier = Modifier.height(15.dp))
-           TextField(value = "Default", onValueChange ={} )
+           TextField(value = "ФИО", onValueChange ={} )
 
             Spacer(modifier = Modifier.height(15.dp))
-            TextField(value = "Default", onValueChange ={} )
+            TextField(value = "Образование", onValueChange ={} )
 
             Spacer(modifier = Modifier.height(15.dp))
-            TextField(value = "Default", onValueChange ={} )
+            TextField(value = "Специальность", onValueChange ={} )
 
             Spacer(modifier = Modifier.height(15.dp))
-            TextField(value = "Default", onValueChange ={} )
+            TextField(value = "Номер телефона", onValueChange ={} )
 
             Spacer(modifier = Modifier.height(15.dp))
-            TextField(value = "Default", onValueChange ={} )
+            TextField(value = "Почта", onValueChange ={} )
 
         }
     }
