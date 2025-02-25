@@ -16,18 +16,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.lab1.R
 
 
 @Preview
 @Composable
 fun vacancy_prev(){
-    vacancy()
+    val nav_controller= rememberNavController()
+    vacancy(nav_controller)
 }
 
 
 @Composable
-fun vacancy(){
+fun vacancy(nav_controller: NavController){
 
     Column (modifier = Modifier.fillMaxSize()){
         Row(verticalAlignment=Alignment.CenterVertically, modifier = Modifier.padding(15.dp)){
@@ -38,7 +41,7 @@ fun vacancy(){
                 modifier = Modifier.size(200.dp)
             )
             Spacer(modifier = Modifier.padding(horizontal = 10.dp))
-            Button(onClick = {} ) { Text("Назад") }
+            Button(onClick = {nav_controller.navigate("To_All_Vacancy")} ) { Text("Назад") }
 
         }
 

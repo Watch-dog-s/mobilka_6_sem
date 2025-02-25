@@ -18,6 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.lab1.R
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -25,36 +27,37 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 @Composable
 fun All_Vacancy_prev()
 {
-    All_Vacancy()
+    val nav_controller= rememberNavController()
+    All_Vacancy(nav_controller)
 
 }
 
 
 
 @Composable
-fun All_Vacancy()
+fun All_Vacancy(nav_controller: NavController)
 {
     Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally)
     {
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(50.dp))
         Row (horizontalArrangement = Arrangement.spacedBy(8.dp))
         { Button(onClick = {}) { Text(text="Поиск вакансий") };
             Button(onClick = {}) { Text(text="Домой") } }
 
         Spacer(modifier = Modifier.height(30.dp))
-        Vacancy()
+        Vacancy(nav_controller)
 
         Spacer(modifier = Modifier.height(30.dp))
-        Vacancy()
+        Vacancy(nav_controller)
 
         Spacer(modifier = Modifier.height(30.dp))
-        Vacancy()
+        Vacancy(nav_controller)
 
         Spacer(modifier = Modifier.height(30.dp))
-        Vacancy()
+        Vacancy(nav_controller)
 
         Spacer(modifier = Modifier.height(30.dp))
-        Vacancy()
+        Vacancy(nav_controller)
     }
 
 }
@@ -62,8 +65,8 @@ fun All_Vacancy()
 
 
 @Composable
-fun Vacancy(){
-    Column(modifier = Modifier.fillMaxWidth().clickable(onClick = {}))
+fun Vacancy(nav_controller: NavController){
+    Column(modifier = Modifier.fillMaxWidth().clickable(onClick = {nav_controller.navigate("To_vacancy")}))
     {
         Row {
 

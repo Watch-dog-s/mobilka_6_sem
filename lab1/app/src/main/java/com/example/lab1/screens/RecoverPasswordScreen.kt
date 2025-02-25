@@ -12,18 +12,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 
 
 @Preview
 @Composable
 fun Recovery_Password_prev(){
-    Recovery_Password()
+    val nav_controller= rememberNavController()
+    Recovery_Password(nav_controller)
 
 
 }
 
 @Composable
-fun Recovery_Password(){
+fun Recovery_Password(nav_controller: NavController){
 
     Column(modifier = Modifier.fillMaxSize().padding(15.dp)) {
         Text(text = "Восстановление пароля");
@@ -37,7 +40,7 @@ fun Recovery_Password(){
 
 
         Spacer(modifier = Modifier.height(15.dp))
-        Button(onClick = {}) { Text(text="Восстановить") }
+        Button(onClick = {nav_controller.navigate("To_Auth_prev")}) { Text(text="Восстановить") }
 
 
     }

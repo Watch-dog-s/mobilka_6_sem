@@ -19,17 +19,24 @@ import androidx.compose.ui.layout.HorizontalAlignmentLine
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.lab1.R
 
 
 @Preview(showBackground = true)
 @Composable
-fun MainScreen_prev(){MainScreen()}
+fun MainScreen_prev()
+{
+    val nav_controller= rememberNavController()
+    MainScreen(nav_controller)}
 
 
 
 @Composable
-fun MainScreen(){
+fun MainScreen(nav_controller:NavController){
+
     Column (modifier = Modifier.fillMaxSize()) {
 
         Spacer(modifier = Modifier.height(40.dp))
@@ -39,10 +46,10 @@ fun MainScreen(){
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                Button(onClick = {})
+                Button(onClick = {nav_controller.navigate("To_All_Vacancy")})
                 { Text(text = "Поиск вкансий") };
 
-                Button(onClick = {})
+                Button(onClick = {nav_controller.navigate("To_About_me")})
                 { Text(text = "Обновить данные") }
 
                 Spacer(modifier = Modifier.height(40.dp))
@@ -80,7 +87,7 @@ fun ImageScreen(){
 
 @Composable
 fun Vacancy_Response(){
-    Column {
+    Column(modifier = Modifier.padding(25.dp)) {
         Text("Отклик по вакансии 1");
         Text("Отклик по вакансии 2")
 

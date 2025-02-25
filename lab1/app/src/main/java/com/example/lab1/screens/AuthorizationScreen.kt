@@ -22,11 +22,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 
-@Preview(showBackground = true)
 @Composable
-fun Auth_Prev() {
+fun Auth_Prev(navController: NavHostController) {
     Column(
         modifier = Modifier.fillMaxHeight()
             .fillMaxWidth()
@@ -81,7 +82,7 @@ fun Auth_Prev() {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Button(onClick = {} ) { Text(text = "Войти") }
+                Button(onClick ={ navController.navigate("To_home") }) { Text(text = "Войти") }
             }
         }
 
@@ -100,11 +101,11 @@ fun Auth_Prev() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
-                            Button(onClick = { /* TODO: обработка регистрации */ }) {
+                            Button(onClick = {navController.navigate("To_About_me")  }) {
                                 Text("Регистрация")
                             }
                             Spacer(modifier = Modifier.width(16.dp))
-                            Button(onClick = { /* TODO: обработка восстановления пароля */ }) {
+                            Button(onClick = { navController.navigate("To_Recovery_password")}) {
                                 Text("Забыл пароль")
                             }
                         }

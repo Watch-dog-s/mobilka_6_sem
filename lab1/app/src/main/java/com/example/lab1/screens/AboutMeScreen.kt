@@ -1,5 +1,6 @@
 package com.example.lab1.screens
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -19,18 +20,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 
 @Preview(showBackground = true)
 @Composable
 fun About_me_Prev() {
 
-    About_me()
+    val nav_controller= rememberNavController()
+    About_me(nav_controller)
 }
 
 
 @Composable
-fun About_me() {
+fun About_me(nav_controller:NavController) {
     Column(modifier = Modifier.fillMaxSize()) {
 
         Spacer(modifier = Modifier.height(50.dp))
@@ -41,7 +46,7 @@ fun About_me() {
                     .background(Color.Red)
                     .weight(1f)
             ) {
-                Button(onClick = {},) {   Text(text = "Поиск", color = Color.White)}
+                Button(onClick = {nav_controller.navigate("To_SearchSettings")},) {   Text(text = "Поиск", color = Color.White)}
 
             }
 
@@ -50,7 +55,7 @@ fun About_me() {
                     .background(Color.Blue)
                     .weight(1f)
             ) {
-                Button(onClick = {},) {   Text(text = "Обновить данные", color = Color.White)}
+                Button(onClick = {nav_controller.navigate("To_About_me")},) {   Text(text = "Обновить данные", color = Color.White)}
             }
         }
 
