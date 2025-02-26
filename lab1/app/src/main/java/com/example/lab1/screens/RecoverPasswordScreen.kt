@@ -28,7 +28,8 @@ fun Recovery_Password_prev(){
 @Composable
 fun Recovery_Password(nav_controller: NavController){
 
-    Column(modifier = Modifier.fillMaxSize().padding(15.dp)) {
+    Column(modifier = Modifier.fillMaxSize().padding(45.dp)) {
+
         Text(text = "Восстановление пароля");
 
         Spacer(modifier = Modifier.height(15.dp))

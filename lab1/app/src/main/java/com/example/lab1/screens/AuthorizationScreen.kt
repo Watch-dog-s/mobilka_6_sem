@@ -30,16 +30,15 @@ import androidx.navigation.compose.rememberNavController
 fun Auth_Prev(navController: NavHostController) {
     Column(
         modifier = Modifier.fillMaxHeight()
-            .fillMaxWidth()
-            .background(color = Color.Red)
-    )
+            .fillMaxWidth())
+
     {
 
         Spacer(modifier = Modifier.height(300.dp))
 
         // логин
         Box(
-            modifier = Modifier.background(color = Color.Blue)
+            modifier = Modifier
                 .fillMaxWidth()
         )
         {
@@ -56,7 +55,7 @@ fun Auth_Prev(navController: NavHostController) {
 
         // пароль
         Box(
-            modifier = Modifier.background(color = Color.Blue)
+            modifier = Modifier
                 .fillMaxWidth()
         )
         {
@@ -74,7 +73,7 @@ fun Auth_Prev(navController: NavHostController) {
 
         // войти
         Box(
-            modifier = Modifier.background(color = Color.Blue)
+            modifier = Modifier
                 .fillMaxWidth()
         )
         {
@@ -93,7 +92,6 @@ fun Auth_Prev(navController: NavHostController) {
 
                 Box(
                     modifier = Modifier
-                        .background(color = Color.Blue)
                         .fillMaxWidth()
                 ) {
                     Column(

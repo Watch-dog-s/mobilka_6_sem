@@ -43,7 +43,6 @@ fun About_me(nav_controller:NavController) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier
-                    .background(Color.Red)
                     .weight(1f)
             ) {
                 Button(onClick = {nav_controller.navigate("To_SearchSettings")},) {   Text(text = "Поиск", color = Color.White)}
@@ -52,7 +51,6 @@ fun About_me(nav_controller:NavController) {
 
             Column(
                 modifier = Modifier
-                    .background(Color.Blue)
                     .weight(1f)
             ) {
                 Button(onClick = {nav_controller.navigate("To_About_me")},) {   Text(text = "Обновить данные", color = Color.White)}
@@ -64,7 +62,6 @@ fun About_me(nav_controller:NavController) {
 
         Column(
             modifier = Modifier
-                .background(Color.Green)
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(12.dp)

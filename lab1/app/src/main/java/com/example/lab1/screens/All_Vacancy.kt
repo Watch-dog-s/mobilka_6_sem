@@ -41,8 +41,8 @@ fun All_Vacancy(nav_controller: NavController)
     {
         Spacer(modifier = Modifier.height(50.dp))
         Row (horizontalArrangement = Arrangement.spacedBy(8.dp))
-        { Button(onClick = {}) { Text(text="Поиск вакансий") };
-            Button(onClick = {}) { Text(text="Домой") } }
+        { Button(onClick = {nav_controller.navigate("To_All_Vacancy")}) { Text(text="Поиск вакансий") };
+            Button(onClick = {nav_controller.navigate("To_home")}) { Text(text="Домой") } }
 
         Spacer(modifier = Modifier.height(30.dp))
         Vacancy(nav_controller)

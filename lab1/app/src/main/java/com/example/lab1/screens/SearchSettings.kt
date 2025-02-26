@@ -141,7 +141,7 @@ fun SearchSettings(nav_controller: NavController) {
                     Text(text = "Поиск")
                 }
 
-                Button(onClick = { nav_controller.navigate("To_About_me") }) {
+                Button(onClick = { nav_controller.navigate("To_home") }) {
                     Text(text = "Домой")
                 }
             }
