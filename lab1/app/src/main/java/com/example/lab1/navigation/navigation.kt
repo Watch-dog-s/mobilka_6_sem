@@ -9,6 +9,7 @@ import com.example.lab1.screens.All_Vacancy
 import com.example.lab1.screens.Auth_Prev
 import com.example.lab1.screens.MainScreen
 import com.example.lab1.screens.Recovery_Password
+import com.example.lab1.screens.Registration
 import com.example.lab1.screens.SearchSettings
 import com.example.lab1.screens.vacancy
 
@@ -29,6 +30,8 @@ fun navigation(nav_controller: NavHostController)
         composable("To_Auth_prev"){ Auth_Prev(nav_controller) }
         composable("To_All_Vacancy"){ All_Vacancy(nav_controller) }
         composable("To_About_me"){ About_me(nav_controller) }
+
+        composable("To_Registration"){ Registration(nav_controller) }
 
     }
 }

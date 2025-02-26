@@ -1,10 +1,7 @@
 package com.example.lab1.screens
 
-import android.content.Context
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,50 +12,36 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 
 
-@Preview(showBackground = true)
+@Preview
 @Composable
-fun About_me_Prev() {
-
+fun Registration_prev(){
     val nav_controller= rememberNavController()
-    About_me(nav_controller)
+    Registration(nav_controller)
+
 }
 
 
+
 @Composable
-fun About_me(nav_controller:NavController) {
-    Column(modifier = Modifier.fillMaxSize()) {
-
-        Spacer(modifier = Modifier.height(50.dp))
-
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Button(onClick = {nav_controller.navigate("To_SearchSettings")},) {   Text(text = "Поиск", color = Color.White)}
-
-            }
-
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-            ) {
-                Button(onClick = {nav_controller.navigate("To_About_me")}) {   Text(text = "Обновить данные", color = Color.White)}
-            }
+fun Registration(nav_controller: NavController){
+    Column(modifier = Modifier.fillMaxSize().padding(25.dp))
+    {
+        Box(contentAlignment = Alignment.Center) {
+            Text(
+                text = "Приветствуем вас на экране регистрации!",
+                textAlign = TextAlign.Center
+            )
         }
 
-
-        Spacer(modifier = Modifier.height(50.dp))
 
         Column(
             modifier = Modifier
@@ -68,7 +51,7 @@ fun About_me(nav_controller:NavController) {
         ) {
 
             Spacer(modifier = Modifier.height(15.dp))
-           TextField(value = "ФИО", onValueChange ={} )
+            TextField(value = "ФИО", onValueChange ={} )
 
             Spacer(modifier = Modifier.height(15.dp))
             TextField(value = "Образование", onValueChange ={} )
@@ -82,6 +65,14 @@ fun About_me(nav_controller:NavController) {
             Spacer(modifier = Modifier.height(15.dp))
             TextField(value = "Почта", onValueChange ={} )
 
+
+
+            Spacer(modifier = Modifier.height(50.dp))
+            Button(onClick = {nav_controller.navigate("To_Auth_prev")}) { Text(text="Зарегестрироваться") }
+
         }
+
     }
+
+
 }

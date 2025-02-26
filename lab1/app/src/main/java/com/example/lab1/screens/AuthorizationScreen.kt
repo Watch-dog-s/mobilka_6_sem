@@ -99,7 +99,7 @@ fun Auth_Prev(navController: NavHostController) {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Row {
-                            Button(onClick = {navController.navigate("To_About_me")  }) {
+                            Button(onClick = {navController.navigate("To_Registration")  }) {
                                 Text("Регистрация")
                             }
                             Spacer(modifier = Modifier.width(16.dp))
