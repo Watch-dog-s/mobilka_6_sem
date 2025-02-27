@@ -68,7 +68,7 @@ fun Registration(nav_controller: NavController){
 
 
             Spacer(modifier = Modifier.height(50.dp))
-            Button(onClick = {nav_controller.navigate("To_Auth_prev")}) { Text(text="Зарегестрироваться") }
+            Button(onClick = {nav_controller.navigate("To_Auth_prev")}) { Text(text="Зарегистрироваться") }
 
         }
 

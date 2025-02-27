@@ -68,7 +68,7 @@ fun MainScreen(nav_controller:NavController){
 
 
             Spacer(modifier = Modifier.height(200.dp))
-            Button(onClick = {nav_controller.navigate("To_Auth_prev")}) { Text(text="Домой")}
+            Button(onClick = {nav_controller.navigate("To_Auth_prev")}) { Text(text="Выйти")}
         }
     }
 }
