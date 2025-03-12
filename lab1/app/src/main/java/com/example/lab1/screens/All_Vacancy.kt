@@ -81,9 +81,22 @@ fun All_Vacancy(navController: NavController) {
         }
     }
 
+
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Все вакансии") })
+            TopAppBar(
+                title = { Text("Все вакансии") },
+                actions = {
+                    Button(onClick = { navController.navigate("To_home") })
+                    {
+                        Text(text="Поиск")
+                    }
+                    Button(onClick = { navController.navigate("To_SearchSettings") })
+                    {
+                        Text(text="Домой")
+                    }
+                }
+            )
         }
     ) { paddingValues ->
         LazyColumn(modifier = Modifier.padding(paddingValues).padding(16.dp)) {
@@ -93,6 +106,10 @@ fun All_Vacancy(navController: NavController) {
         }
     }
 }
+
+
+
+
 
 @Composable
 fun VacancyItem(vacancy: Vacancy) {
