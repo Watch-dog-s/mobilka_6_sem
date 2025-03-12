@@ -46,7 +46,7 @@ fun MainScreen(nav_controller:NavController){
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
 
-                Button(onClick = {nav_controller.navigate("To_All_Vacancy")})
+                Button(onClick = {nav_controller.navigate("To_SearchSettings")})
                 { Text(text = "Поиск вкансий") };
 
                 Button(onClick = {nav_controller.navigate("To_About_me")})

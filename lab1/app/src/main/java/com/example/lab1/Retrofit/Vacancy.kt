@@ -5,5 +5,6 @@ data class AllVacancy(val items: List<Vacancy>)
 
 data class Vacancy(
     val name: String,
-    val description: String? = null
+    val description: String? = null,
+    val id: String
 )

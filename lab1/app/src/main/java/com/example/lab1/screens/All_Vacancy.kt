@@ -1,5 +1,6 @@
 package com.example.lab1.screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -37,12 +38,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.lab1.R
@@ -67,36 +70,77 @@ fun All_Vacancy_prev()
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun All_Vacancy(navController: NavController) {
-    val vacancies = remember { mutableStateOf<List<Vacancy>>(emptyList()) }
+    var vacancies by rememberSaveable { mutableStateOf<List<Vacancy>>(emptyList()) }
+    var isError by rememberSaveable { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
 
     LaunchedEffect(Unit) {
         coroutineScope.launch {
             try {
                 val response = RetrofitClient.instance.create(VacancyAPI::class.java).getVacancies()
-                vacancies.value = response.items
+
+                Log.i("12345",response.items[0].id)
+
+                vacancies = response.items
+                isError = false
             } catch (e: Exception) {
                 e.printStackTrace()
+                isError = true
             }
         }
+
     }
 
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Все вакансии") })
+          //  isError=true
+            TopAppBar(
+                title = { Text("Все вакансии") },
+                actions = {
+                    Button(onClick = { navController.navigate("To_SearchSettings") }) {
+                        Text(text = "Поиск")
+                    }
+                    Button(onClick = { navController.navigate("To_home") }) {
+                        Text(text = "Домой")
+                    }
+                }
+            )
         }
     ) { paddingValues ->
-        LazyColumn(modifier = Modifier.padding(paddingValues).padding(16.dp)) {
-            items(vacancies.value) { vacancy ->
-                VacancyItem(vacancy)
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            when {
+                isError -> {
+                    Text("Ошибка загрузки данных", color = Color.Red, fontSize = 18.sp)
+                }
+                vacancies.isEmpty() -> {
+                    Text("Ничего не найдено", fontSize = 18.sp)
+                }
+                else -> {
+                    LazyColumn {
+                        items(vacancies) { vacancy ->
+                            VacancyItem(vacancy,navController)
+                        }
+                    }
+                }
             }
         }
     }
 }
 
+
+
+
+
 @Composable
-fun VacancyItem(vacancy: Vacancy) {
-    Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+fun VacancyItem(vacancy: Vacancy,navController:NavController) {
+    Card(modifier = Modifier.fillMaxWidth().padding(8.dp).clickable(onClick = {navController.navigate("To_vacancy") })) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = vacancy.name)
             vacancy.description?.let {
