@@ -9,18 +9,47 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.lab1.R
+import com.example.lab1.Retrofit.RetrofitClient
+import com.example.lab1.Retrofit.Vacancy
+import com.example.lab1.Retrofit.VacancyAPI
+import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
 @Preview
@@ -34,55 +63,45 @@ fun All_Vacancy_prev()
 
 
 
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun All_Vacancy(nav_controller: NavController)
-{
-    Column (modifier = Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally)
-    {
-        Spacer(modifier = Modifier.height(50.dp))
-        Row (horizontalArrangement = Arrangement.spacedBy(8.dp))
-        { Button(onClick = {nav_controller.navigate("To_All_Vacancy")}) { Text(text="Поиск вакансий") };
-            Button(onClick = {nav_controller.navigate("To_home")}) { Text(text="Домой") } }
+fun All_Vacancy(navController: NavController) {
+    val vacancies = remember { mutableStateOf<List<Vacancy>>(emptyList()) }
+    val coroutineScope = rememberCoroutineScope()
 
-        Spacer(modifier = Modifier.height(30.dp))
-        Vacancy(nav_controller)
-
-        Spacer(modifier = Modifier.height(30.dp))
-        Vacancy(nav_controller)
-
-        Spacer(modifier = Modifier.height(30.dp))
-        Vacancy(nav_controller)
-
-        Spacer(modifier = Modifier.height(30.dp))
-        Vacancy(nav_controller)
-
-        Spacer(modifier = Modifier.height(30.dp))
-        Vacancy(nav_controller)
+    LaunchedEffect(Unit) {
+        coroutineScope.launch {
+            try {
+                val response = RetrofitClient.instance.create(VacancyAPI::class.java).getVacancies()
+                vacancies.value = response.items
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
+    Scaffold(
+        topBar = {
+            TopAppBar(title = { Text("Все вакансии") })
+        }
+    ) { paddingValues ->
+        LazyColumn(modifier = Modifier.padding(paddingValues).padding(16.dp)) {
+            items(vacancies.value) { vacancy ->
+                VacancyItem(vacancy)
+            }
+        }
+    }
 }
-
-
 
 @Composable
-fun Vacancy(nav_controller: NavController){
-    Column(modifier = Modifier.fillMaxWidth().clickable(onClick = {nav_controller.navigate("To_vacancy")}))
-    {
-        Row {
-
-
-            Text(text="Название компании")
+fun VacancyItem(vacancy: Vacancy) {
+    Card(modifier = Modifier.fillMaxWidth().padding(8.dp)) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(text = vacancy.name)
+            vacancy.description?.let {
+                Text(text = it)
+            }
         }
-
-        Row {
-
-            Image(
-                painter = painterResource(id = R.drawable.job),
-                contentDescription = "Тут будет аватар компании",
-                modifier = Modifier.size(50.dp)
-            )
-
-            Text(text="Описание вакансии тут МНОООООГО текста ")
-        }
-}
+    }
 }
