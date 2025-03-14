@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.lab1.ViewModel.SearchSettingViewModel
 import com.example.lab1.screens.About_me
 import com.example.lab1.screens.All_Vacancy
 import com.example.lab1.screens.Auth_Prev
@@ -15,7 +16,7 @@ import com.example.lab1.screens.vacancy
 
 
 @Composable
-fun navigation(nav_controller: NavHostController)
+fun navigation(nav_controller: NavHostController,SearchViewModel1:SearchSettingViewModel)
 {
     NavHost(
         navController = nav_controller,
@@ -24,11 +25,11 @@ fun navigation(nav_controller: NavHostController)
         composable("To_home"){ MainScreen(nav_controller) }
 
         composable("To_Recovery_password"){ Recovery_Password(nav_controller) }
-        composable("To_SearchSettings"){ SearchSettings(nav_controller) }
+        composable("To_SearchSettings"){ SearchSettings(nav_controller,SearchViewModel1) }
         composable("To_vacancy"){ vacancy(nav_controller) }
 
         composable("To_Auth_prev"){ Auth_Prev(nav_controller) }
-        composable("To_All_Vacancy"){ All_Vacancy(nav_controller) }
+        composable("To_All_Vacancy"){ All_Vacancy(nav_controller,SearchViewModel1) }
         composable("To_About_me"){ About_me(nav_controller) }
 
         composable("To_Registration"){ Registration(nav_controller) }

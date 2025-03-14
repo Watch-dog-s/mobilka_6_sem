@@ -1,5 +1,6 @@
 package com.example.lab1.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -38,19 +39,23 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.lab1.ViewModel.SearchSettingViewModel
 
 
 @Preview(showBackground = true)
 @Composable
 fun SearchSettings_prev() {
     val nav_controller= rememberNavController()
-    SearchSettings(nav_controller)
+    //SearchSettings(nav_controller)
 }
 
 
 
 @Composable
-fun SearchSettings(navController: NavController) {
+fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingViewModel) {
+
+
+
     var vacancy by rememberSaveable { mutableStateOf("") }
     var direction by rememberSaveable { mutableStateOf("") }
     var position by rememberSaveable { mutableStateOf("") }
@@ -63,7 +68,7 @@ fun SearchSettings(navController: NavController) {
 
         TextField(
             value = vacancy,
-            onValueChange = { vacancy = it },
+            onValueChange = {vacancy=it},
             placeholder = { Text(text = "Введите вакансию") },
             trailingIcon = {
                 if (vacancy.isNotEmpty()) {
@@ -106,7 +111,14 @@ fun SearchSettings(navController: NavController) {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Button(onClick = { navController.navigate("To_All_Vacancy") }) {
+
+            Button(onClick = { navController.navigate("To_All_Vacancy",)
+
+                SearchViewModel1.update_vacancy(vacancy)
+                Log.i("Search_Vacancy",  SearchViewModel1.get_vacancy().toString()  )
+
+            })
+            {
                 Text(text = "Поиск")
             }
 

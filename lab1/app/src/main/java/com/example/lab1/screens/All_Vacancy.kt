@@ -52,6 +52,7 @@ import com.example.lab1.R
 import com.example.lab1.Retrofit.RetrofitClient
 import com.example.lab1.Retrofit.Vacancy
 import com.example.lab1.Retrofit.VacancyAPI
+import com.example.lab1.ViewModel.SearchSettingViewModel
 import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -60,7 +61,7 @@ import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 fun All_Vacancy_prev()
 {
     val nav_controller= rememberNavController()
-    All_Vacancy(nav_controller)
+  //  All_Vacancy(nav_controller)
 
 }
 
@@ -69,7 +70,10 @@ fun All_Vacancy_prev()
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun All_Vacancy(navController: NavController) {
+fun All_Vacancy(navController: NavController,SeacrchViewModel1:SearchSettingViewModel) {
+
+
+
     var vacancies by rememberSaveable { mutableStateOf<List<Vacancy>>(emptyList()) }
     var isError by rememberSaveable { mutableStateOf(false) }
     val coroutineScope = rememberCoroutineScope()
@@ -77,12 +81,19 @@ fun All_Vacancy(navController: NavController) {
     LaunchedEffect(Unit) {
         coroutineScope.launch {
             try {
-                val response = RetrofitClient.instance.create(VacancyAPI::class.java).getVacancies()
 
-                Log.i("12345",response.items[0].id)
+                Log.d("Search_Vacancy1",SeacrchViewModel1.get_vacancy().toString() )
+                val response = RetrofitClient.instance.create(VacancyAPI::class.java).getVacancies(query= SeacrchViewModel1.get_vacancy().toString())
+
 
                 vacancies = response.items
                 isError = false
+
+                Log.d("VacancyItem", "Vacancy ID: ${vacancies[0].id}")
+                Log.d("VacancyItem", "Vacancy ID: ${vacancies[1].id}")
+                Log.d("VacancyItem", "Vacancy ID: ${vacancies[2].id}")
+                Log.d("VacancyItem", "Vacancy ID: ${vacancies[3].id}")
+
             } catch (e: Exception) {
                 e.printStackTrace()
                 isError = true
@@ -93,7 +104,7 @@ fun All_Vacancy(navController: NavController) {
 
     Scaffold(
         topBar = {
-          //  isError=true
+           // isError=true
             TopAppBar(
                 title = { Text("Все вакансии") },
                 actions = {
@@ -148,4 +159,7 @@ fun VacancyItem(vacancy: Vacancy,navController:NavController) {
             }
         }
     }
+
+
+
 }

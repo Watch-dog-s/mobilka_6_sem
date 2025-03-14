@@ -16,6 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.lifecycle.lifecycleScope
 import com.example.lab1.Retrofit.VacancyAPI
+import com.example.lab1.ViewModel.SearchSettingViewModel
 import kotlinx.coroutines.launch
 
 
@@ -23,34 +24,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+
+        var SearchViewModel1 = SearchSettingViewModel()
         setContent {
             val navController = rememberNavController()
-            navigation(navController)
+            navigation(navController,SearchViewModel1)
         }
 
 
-
-        val retrofit = Retrofit.Builder()
-            .baseUrl("https://api.hh.ru/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-
-        val jobApi = retrofit.create(VacancyAPI::class.java)
-
-        lifecycleScope.launch {
-            try {
-                val response = jobApi.getVacancies()
-                response.items.forEach {
-                    Log.d("Vacancy", "Название: ${it.name}, Описание: ${it.description}")
-                }
-            } catch (e: Exception) {
-                Log.e("Vacancy", "Ошибка загрузки: ${e.message}")
-            }
-        }
 
     }
-
 
 
 }

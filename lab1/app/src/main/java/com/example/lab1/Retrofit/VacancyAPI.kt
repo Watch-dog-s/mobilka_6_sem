@@ -8,9 +8,8 @@ import retrofit2.http.Query
 interface VacancyAPI {
     @GET("vacancies")
     suspend fun getVacancies(
-        @Query("name") query: String = "Android-разработчик",
+        @Query("name") query: String,
         @Query("area") area: String = "1",
-        @Query("per_page") perPage: Int = 5,
-        @Query("id") id:String
+        @Query("per_page") perPage: Int = 20
     ): AllVacancy
 }
