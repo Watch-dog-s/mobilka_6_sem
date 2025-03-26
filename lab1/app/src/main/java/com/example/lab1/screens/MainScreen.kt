@@ -1,5 +1,6 @@
 package com.example.lab1.screens
 
+import android.widget.Switch
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,8 +12,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.HorizontalAlignmentLine
@@ -23,6 +29,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.lab1.R
+import com.example.lab1.ui.theme.Lab1Theme
 
 
 @Preview(showBackground = true)
@@ -35,43 +42,82 @@ fun MainScreen_prev()
 
 
 @Composable
-fun MainScreen(nav_controller:NavController){
+fun MainScreen(nav_controller:NavController) {
 
-    Column (modifier = Modifier.fillMaxSize()) {
 
-        Spacer(modifier = Modifier.height(40.dp))
+    var isDarkTheme by rememberSaveable { mutableStateOf(false) }
+
+    // Устанавливаем тему в зависимости от состояния переключателя
+    Lab1Theme(darkTheme = isDarkTheme) {
+
+
         Column(modifier = Modifier.fillMaxSize()) {
+
+            Spacer(modifier = Modifier.height(60.dp))
+
+
+
+
+
+
+            // Переключатель темы
             Row(
                 modifier = Modifier.fillMaxWidth().padding(16.dp),
-                horizontalArrangement = Arrangement.SpaceEvenly
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                Button(onClick = {nav_controller.navigate("To_SearchSettings")})
-                { Text(text = "Поиск вкансий") };
+                Button(onClick = {
+                    isDarkTheme = !isDarkTheme
+                }) { Text(text = "Переключение темы") }
+            }
 
-                Button(onClick = {nav_controller.navigate("To_About_me")})
-                { Text(text = "Обновить данные") }
+
+
+
+
+
+
+            Column(modifier = Modifier.fillMaxSize()) {
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+
+                    Button(onClick = { nav_controller.navigate("To_SearchSettings") })
+                    { Text(text = "Поиск вкансий") };
+
+                    Button(onClick = { nav_controller.navigate("To_About_me") })
+                    { Text(text = "Обновить данные") }
+
+                    Spacer(modifier = Modifier.height(40.dp))
+
+
+                }
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(text = "Name")
+                }
+                Spacer(modifier = Modifier.height(20.dp))
+                ImageScreen()
 
                 Spacer(modifier = Modifier.height(40.dp))
+                Vacancy_Response()
 
 
-
+                Spacer(modifier = Modifier.height(200.dp))
+                Button(onClick = { nav_controller.navigate("To_Auth_prev") }) { Text(text = "Выйти") }
             }
-            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Name")
-            }
-            Spacer(modifier = Modifier.height(20.dp))
-            ImageScreen()
-
-            Spacer(modifier = Modifier.height(40.dp))
-            Vacancy_Response()
-
-
-            Spacer(modifier = Modifier.height(200.dp))
-            Button(onClick = {nav_controller.navigate("To_Auth_prev")}) { Text(text="Выйти")}
         }
     }
 }
+
+
+
+
+
+
 
 
 @Composable

@@ -1,5 +1,6 @@
 package com.example.lab1.screens
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -52,7 +54,9 @@ import com.example.lab1.R
 import com.example.lab1.Retrofit.RetrofitClient
 import com.example.lab1.Retrofit.Vacancy
 import com.example.lab1.Retrofit.VacancyAPI
+import com.example.lab1.SharedPreferences.SearchHistoryManager
 import com.example.lab1.ViewModel.SearchSettingViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.intellij.lang.annotations.JdkConstants.HorizontalAlignment
 
@@ -76,9 +80,14 @@ fun All_Vacancy(navController: NavController,SeacrchViewModel1:SearchSettingView
 
     var vacancies by rememberSaveable { mutableStateOf<List<Vacancy>>(emptyList()) }
     var isError by rememberSaveable { mutableStateOf(false) }
+    var isLoading by rememberSaveable { mutableStateOf(true) }
     val coroutineScope = rememberCoroutineScope()
 
+    val SearchHistoryManager1=SearchHistoryManager(Context)
+    val searchHistory = SearchHistoryManager.g
+
     LaunchedEffect(Unit) {
+        delay(5_000) // Ожидание 15 секунд
         coroutineScope.launch {
             try {
 
@@ -97,6 +106,11 @@ fun All_Vacancy(navController: NavController,SeacrchViewModel1:SearchSettingView
             } catch (e: Exception) {
                 e.printStackTrace()
                 isError = true
+            }
+
+
+            finally {
+                isLoading = false // Отключаем индикатор загрузки после завершения запроса
             }
         }
 
@@ -127,6 +141,9 @@ fun All_Vacancy(navController: NavController,SeacrchViewModel1:SearchSettingView
             verticalArrangement = Arrangement.Center
         ) {
             when {
+                isLoading -> { // Показываем индикатор загрузки
+                    CircularProgressIndicator()
+                }
                 isError -> {
                     Text("Ошибка загрузки данных", color = Color.Red, fontSize = 18.sp)
                 }
@@ -136,16 +153,20 @@ fun All_Vacancy(navController: NavController,SeacrchViewModel1:SearchSettingView
                 else -> {
                     LazyColumn {
                         items(vacancies) { vacancy ->
-                            VacancyItem(vacancy,navController)
+                            VacancyItem(vacancy, navController)
                         }
                     }
                 }
+
+
+
             }
         }
+
+
+
     }
 }
-
-
 
 
 
