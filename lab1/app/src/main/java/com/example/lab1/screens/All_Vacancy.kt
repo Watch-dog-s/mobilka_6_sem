@@ -41,6 +41,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -71,54 +72,42 @@ fun All_Vacancy_prev()
 
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun All_Vacancy(navController: NavController,SeacrchViewModel1:SearchSettingViewModel) {
-
-
-
+fun All_Vacancy(navController: NavController, SeacrchViewModel1: SearchSettingViewModel) {
     var vacancies by rememberSaveable { mutableStateOf<List<Vacancy>>(emptyList()) }
     var isError by rememberSaveable { mutableStateOf(false) }
     var isLoading by rememberSaveable { mutableStateOf(true) }
-    val coroutineScope = rememberCoroutineScope()
 
-    val SearchHistoryManager1=SearchHistoryManager(Context)
-    val searchHistory = SearchHistoryManager.g
+    val context = LocalContext.current
+    val searchHistoryManager = remember { SearchHistoryManager(context) }
+    val searchHistory = searchHistoryManager.getSearchHistory()
 
     LaunchedEffect(Unit) {
-        delay(5_000) // Ожидание 15 секунд
-        coroutineScope.launch {
-            try {
+        try {
+            Log.d("Search_Vacancy1", SeacrchViewModel1.get_vacancy().toString())
+            val response = RetrofitClient.instance.create(VacancyAPI::class.java)
+                .getVacancies(query = SeacrchViewModel1.get_vacancy().toString())
 
-                Log.d("Search_Vacancy1",SeacrchViewModel1.get_vacancy().toString() )
-                val response = RetrofitClient.instance.create(VacancyAPI::class.java).getVacancies(query= SeacrchViewModel1.get_vacancy().toString())
+            vacancies = response.items
+            isError = false
 
-
-                vacancies = response.items
-                isError = false
-
-                Log.d("VacancyItem", "Vacancy ID: ${vacancies[0].id}")
-                Log.d("VacancyItem", "Vacancy ID: ${vacancies[1].id}")
-                Log.d("VacancyItem", "Vacancy ID: ${vacancies[2].id}")
-                Log.d("VacancyItem", "Vacancy ID: ${vacancies[3].id}")
-
-            } catch (e: Exception) {
-                e.printStackTrace()
-                isError = true
+            if (vacancies.isNotEmpty()) {
+                vacancies.forEachIndexed { index, vacancy ->
+                    Log.d("VacancyItem", "Vacancy ID: ${vacancy.id} (Index: $index)")
+                }
             }
 
-
-            finally {
-                isLoading = false // Отключаем индикатор загрузки после завершения запроса
-            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            isError = true
+        } finally {
+            isLoading = false
         }
-
     }
 
     Scaffold(
         topBar = {
-           // isError=true
             TopAppBar(
                 title = { Text("Все вакансии") },
                 actions = {
@@ -141,15 +130,9 @@ fun All_Vacancy(navController: NavController,SeacrchViewModel1:SearchSettingView
             verticalArrangement = Arrangement.Center
         ) {
             when {
-                isLoading -> { // Показываем индикатор загрузки
-                    CircularProgressIndicator()
-                }
-                isError -> {
-                    Text("Ошибка загрузки данных", color = Color.Red, fontSize = 18.sp)
-                }
-                vacancies.isEmpty() -> {
-                    Text("Ничего не найдено", fontSize = 18.sp)
-                }
+                isLoading -> CircularProgressIndicator()
+                isError -> Text("Ошибка загрузки данных", color = Color.Red, fontSize = 18.sp)
+                vacancies.isEmpty() -> Text("Ничего не найдено", fontSize = 18.sp)
                 else -> {
                     LazyColumn {
                         items(vacancies) { vacancy ->
@@ -157,14 +140,8 @@ fun All_Vacancy(navController: NavController,SeacrchViewModel1:SearchSettingView
                         }
                     }
                 }
-
-
-
             }
         }
-
-
-
     }
 }
 

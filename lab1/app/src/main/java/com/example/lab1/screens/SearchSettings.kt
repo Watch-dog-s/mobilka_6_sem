@@ -73,7 +73,20 @@ fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingVi
     val searchHistoryManager = remember { SearchHistoryManager(context) }
 
 
-    var history by remember { mutableStateOf(searchHistoryManager.getHistory()) }
+
+
+    // Получаем историю поиска из SharedPreferences
+    val searchHistory = searchHistoryManager.getSearchHistory()
+
+    // Добавляем тестовое значение
+    searchHistoryManager.addSearchQuery("android")
+
+    // Функция для добавления нового элемента в историю, с проверкой на максимальное количество
+    fun addToHistory(newQuery: String) {
+        if (newQuery.isNotBlank()) {
+            searchHistoryManager.addSearchQuery(newQuery)
+        }
+    }
 
 
 
@@ -100,7 +113,9 @@ fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingVi
 
 
         // Поле ввода с историей
-        SearchField(vacancy, onVacancyChange = { vacancy = it }, searchHistory, addToHistory)
+        SearchField(vacancy, onVacancyChange = { vacancy = it }, searchHistory, ::addToHistory)
+
+
 
         Spacer(modifier = Modifier.height(15.dp))
 
@@ -159,6 +174,8 @@ fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingVi
 
                 SearchViewModel1.update_vacancy(vacancy)
                 Log.i("Search_Vacancy",  SearchViewModel1.get_vacancy().toString()  )
+
+
 
             })
             {
@@ -246,4 +263,7 @@ fun SearchField(
             }
         }
     }
+
+
+
 }

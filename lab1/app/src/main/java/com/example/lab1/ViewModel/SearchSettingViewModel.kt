@@ -9,4 +9,7 @@ class SearchSettingViewModel: ViewModel() {
     fun get_vacancy():String?{return vacancy.value}
     fun update_vacancy(direction1:String){vacancy.value=direction1}
 
+
+    private var searchHistory= MutableLiveData<String>()
+
 }
