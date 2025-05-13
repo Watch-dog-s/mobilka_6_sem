@@ -60,7 +60,7 @@ fun SearchSettings_prev() {
 
 
 @Composable
-fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingViewModel) {
+fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingViewModel,searchHistoryManager:SearchHistoryManager) {
 
 
 
@@ -69,19 +69,14 @@ fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingVi
     var position by rememberSaveable { mutableStateOf("") }
     var experience by rememberSaveable { mutableStateOf("") }
 
-    val context = LocalContext.current
-    val searchHistoryManager = remember { SearchHistoryManager(context) }
+    //val context = LocalContext.current
+    //val searchHistoryManager = remember { SearchHistoryManager(context) }
 
 
 
 
-    // Получаем историю поиска из SharedPreferences
     val searchHistory = searchHistoryManager.getSearchHistory()
-
-    // Добавляем тестовое значение
     searchHistoryManager.addSearchQuery("android")
-
-    // Функция для добавления нового элемента в историю, с проверкой на максимальное количество
     fun addToHistory(newQuery: String) {
         if (newQuery.isNotBlank()) {
             searchHistoryManager.addSearchQuery(newQuery)
@@ -89,8 +84,6 @@ fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingVi
     }
 
 
-
-    // Запускаем автоматический поиск
     AutoSearch(navController, SearchViewModel1, vacancy)
 
 
@@ -118,21 +111,6 @@ fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingVi
 
 
         Spacer(modifier = Modifier.height(15.dp))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -170,12 +148,15 @@ fun SearchSettings(navController: NavController,SearchViewModel1:SearchSettingVi
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            Button(onClick = { navController.navigate("To_All_Vacancy",)
+            Button(onClick = { navController.navigate("To_All_Vacancy")
+
+                // Добавляем в историю поиска
+                if (vacancy.isNotBlank()) {
+                    searchHistoryManager.addSearchQuery(vacancy)
+                }
 
                 SearchViewModel1.update_vacancy(vacancy)
                 Log.i("Search_Vacancy",  SearchViewModel1.get_vacancy().toString()  )
-
-
 
             })
             {
@@ -244,24 +225,26 @@ fun SearchField(
             }
     )
 
+
     // Показать историю поиска, если она существует и не пустая
-    if (searchHistory.isNotEmpty()) {
-        Column(modifier = Modifier.padding(top = 16.dp)) {
-            Text("История поиска:")
-            LazyColumn {
-                items(searchHistory) { historyItem ->
-                    Text(
-                        text = historyItem,
-                        modifier = Modifier
-                            .clickable {
-                                onVacancyChange(historyItem) // При нажатии на элемент из истории, добавляем его в строку поиска
-                                addToHistory(historyItem) // Добавляем в историю
-                            }
-                            .padding(8.dp)
-                    )
-                }
+    if (searchHistory.isNotEmpty()) Column(modifier = Modifier.padding(top = 16.dp)) {
+        Text("История поиска:")
+        LazyColumn {
+            items(searchHistory) { historyItem ->
+                Text(
+                    text = historyItem,
+                    modifier = Modifier
+                        .clickable {
+                            onVacancyChange(historyItem) // При нажатии на элемент из истории, добавляем его в строку поиска
+                            addToHistory(historyItem) // Добавляем в историю
+                        }
+                        .padding(8.dp)
+                )
             }
         }
+
+
+
     }
 
 

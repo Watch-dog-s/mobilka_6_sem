@@ -7,13 +7,34 @@ import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.serialization.Serializable
 import java.sql.Connection
 import java.sql.DriverManager
+
+
+
+
+
+
+
+
+
+
+
 
 fun Application.configureRouting() {
     routing {
         get("/") {
-            call.respondText("Hello World!")
+            //call.respondText("Hello World!")
+            call.respond(
+
+             listOf(
+                    Test1("Monkey1",12),
+                   Test1("Monkey2",12)
+           )
+
+            )
+
         }
     }
 }

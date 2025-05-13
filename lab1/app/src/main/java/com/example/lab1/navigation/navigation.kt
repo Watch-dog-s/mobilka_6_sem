@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.lab1.SharedPreferences.SearchHistoryManager
 import com.example.lab1.ViewModel.SearchSettingViewModel
 import com.example.lab1.screens.About_me
 import com.example.lab1.screens.All_Vacancy
@@ -16,8 +17,11 @@ import com.example.lab1.screens.vacancy
 
 
 @Composable
-fun navigation(nav_controller: NavHostController,SearchViewModel1:SearchSettingViewModel)
+fun navigation(nav_controller: NavHostController,SearchViewModel1:SearchSettingViewModel,searchHistoryManager1:SearchHistoryManager)
 {
+
+
+
     NavHost(
         navController = nav_controller,
         startDestination = "To_Auth_prev") {
@@ -25,7 +29,7 @@ fun navigation(nav_controller: NavHostController,SearchViewModel1:SearchSettingV
         composable("To_home"){ MainScreen(nav_controller) }
 
         composable("To_Recovery_password"){ Recovery_Password(nav_controller) }
-        composable("To_SearchSettings"){ SearchSettings(nav_controller,SearchViewModel1) }
+        composable("To_SearchSettings"){ SearchSettings(nav_controller,SearchViewModel1,searchHistoryManager1) }
         composable("To_vacancy"){ vacancy(nav_controller) }
 
         composable("To_Auth_prev"){ Auth_Prev(nav_controller) }

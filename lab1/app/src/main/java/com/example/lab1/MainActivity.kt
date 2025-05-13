@@ -16,19 +16,23 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import androidx.lifecycle.lifecycleScope
 import com.example.lab1.Retrofit.VacancyAPI
+import com.example.lab1.SharedPreferences.SearchHistoryManager
 import com.example.lab1.ViewModel.SearchSettingViewModel
 import kotlinx.coroutines.launch
+
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        val searchHistoryManager1 = SearchHistoryManager(this)
 
         var SearchViewModel1 = SearchSettingViewModel()
         setContent {
             val navController = rememberNavController()
-            navigation(navController,SearchViewModel1)
+
+            navigation(navController,SearchViewModel1,searchHistoryManager1)
         }
 
 

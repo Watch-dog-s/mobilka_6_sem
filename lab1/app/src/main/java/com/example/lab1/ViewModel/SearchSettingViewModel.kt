@@ -10,6 +10,6 @@ class SearchSettingViewModel: ViewModel() {
     fun update_vacancy(direction1:String){vacancy.value=direction1}
 
 
-    private var searchHistory= MutableLiveData<String>()
+    private var searchHistory= MutableLiveData<Array<String>>()
 
 }

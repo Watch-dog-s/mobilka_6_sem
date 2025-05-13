@@ -158,6 +158,4 @@ fun VacancyItem(vacancy: Vacancy,navController:NavController) {
         }
     }
 
-
-
 }

@@ -10,15 +10,15 @@ class SearchHistoryManager(private val context: Context) {
 
     private val sharedPreferences = context.getSharedPreferences("search_history", Context.MODE_PRIVATE)
 
-    // Получаем историю поиска (с сохранением порядка)
+
     fun getSearchHistory(): List<String> {
         val history = sharedPreferences.getStringSet("history", emptySet()) ?: emptySet()
-        return history.toList() // Теперь порядок сохраняется
+        return history.toList()
     }
 
     // Добавляем новый запрос в историю
     fun addSearchQuery(query: String) {
-        val currentHistory = LinkedHashSet(getSearchHistory()) // Используем LinkedHashSet для сохранения порядка
+        val currentHistory = LinkedHashSet(getSearchHistory()) //  LinkedHashSet для сохранения порядка
 
         if (!currentHistory.contains(query)) {
             currentHistory.add(query) // Добавляем в конец списка
@@ -28,8 +28,12 @@ class SearchHistoryManager(private val context: Context) {
             currentHistory.remove(currentHistory.first()) // Убираем самый старый элемент
         }
 
-        sharedPreferences.edit()
-            .putStringSet("history", currentHistory)
-            .commit() // Используем commit() для мгновенного сохранения
+        sharedPreferences.edit().putStringSet("history", currentHistory).commit() // commit() для мгновенного сохранения
+    }
+
+
+
+    fun deleteSearchHistory() {
+        sharedPreferences.edit().remove("history").apply()
     }
 }
